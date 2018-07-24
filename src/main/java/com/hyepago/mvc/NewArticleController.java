@@ -1,20 +1,33 @@
 package com.hyepago.mvc;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/article/newArticle.do")
 public class NewArticleController {
-	@RequestMapping("/article/newArticleForm")
+	@Autowired
+	private ArticleService articleService;
+	
+	@RequestMapping(method = RequestMethod.GET)
 	public String form() {
-		return "/article/newArticleForm";
+		return "article/newArticleForm";
 	}
 	
-	@RequestMapping("/article/newArticleSubmitted")
-	public String submit(NewArticleCommand command) {
-		System.out.println("力格 " + command.getTitle());
-		System.out.println("郴侩 " + command.getContent());
+	@RequestMapping(method = RequestMethod.POST)
+	public String submit(@ModelAttribute("command")NewArticleCommand command) {
+		System.out.println("力格: " + command.getTitle());
+		System.out.println("郴侩 : " + command.getContent());
 		
-		return "/article/newArticleSubmitted";
+		articleService.writteArticle(command);
+		
+		return "article/newArticleSubmitted";
+	}
+	
+	public void setArticleService(ArticleService articleService) {
+		this.articleService = articleService;
 	}
 }
