@@ -23,6 +23,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	/*
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -35,7 +36,7 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
-	}
+	}*/
 	
 	@RequestMapping("/board/view")
 	public String view() {
@@ -57,5 +58,13 @@ public class HomeController {
 		mv.setViewName("board/reply");
 		
 		return mv;
+	}
+	
+	@RequestMapping("/")
+	public String welcom(Model model) {
+		model.addAttribute("greeting", "Welcom to Web Store!");
+		model.addAttribute("tagline", "The one and only amazing web store");
+		
+		return "welcome";
 	}
 }
